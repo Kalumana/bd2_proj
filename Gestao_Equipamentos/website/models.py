@@ -74,8 +74,16 @@ class StockEquipment(models.Model):
 class Sales(models.Model):
     manager = models.ForeignKey(Managers, on_delete=models.CASCADE)
     Suppliers = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
+    Component = models.ManyToManyField(Component, through='SalesComponent')
+    Equipment = models.ManyToManyField(Equipment, through='SalesEquipment')
     date = models.DateField()
     # Add other fields as needed
+
+class SalesComponent(models.Model):
+    sale = models.ForeignKey(Sales, on_delete=models.CASCADE)
+
+class SalesEquipment(models.Model):
+    sale = models.ForeignKey(Sales, on_delete=models.CASCADE)
 
 class Purchases(models.Model):
     id_purchase = models.BigAutoField(primary_key=True, default=int)
@@ -86,7 +94,7 @@ class Purchases(models.Model):
     date = models.DateField()
     # Add other fields as needed
 
-class PurshaseCompra(models.Model):
+class PurshaseComponent(models.Model):
     purchase = models.ForeignKey(Purchases, on_delete=models.CASCADE)
 
 class PurshaseEquipment(models.Model):
