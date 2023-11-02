@@ -35,7 +35,7 @@ class Types_of_Labor(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=6)
 
     
-class ProdEquipment(models.Model):
+class Equipment(models.Model):
     id_equip = models.BigAutoField(primary_key=True, default=int) 
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -45,6 +45,7 @@ class ProdEquipment(models.Model):
     type_labor = models.ManyToOneRel(Types_of_Labor, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     state = models.CharField(choices=(
+          ('0', "analyzing")
           ('1', "producing"),
           ('2', "produced"),
           ),
@@ -54,49 +55,51 @@ class ProdEquipment(models.Model):
 
 class ComponentUsage(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
-    equipment = models.ForeignKey(ProdEquipment, on_delete=models.CASCADE)
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
    
 
 class StockComponents(models.Model):
     id_stock_comp = models.BigAutoField(primary_key=True, default=int)
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
+    supplier = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
     # Add other fields as needed
 
 class StockEquipment(models.Model):
     id_stock_equip = models.BigAutoField(primary_key=True, default=int)
-    equipment = models.ForeignKey(ProdEquipment, on_delete=models.CASCADE)
+    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
     # Add other fields as needed
 
-class SalesManager(models.Model):
+class Sales(models.Model):
+    manager = models.ForeignKey(Managers, on_delete=models.CASCADE)
+    Suppliers = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
+    date = models.DateField()
+    # Add other fields as needed
+
+class Purchases(models.Model):
+    id_purchase = models.BigAutoField(primary_key=True, default=int)
+    manager = models.ForeignKey(Managers, on_delete=models.CASCADE)
     client = models.ForeignKey(Clients, on_delete=models.CASCADE)
+    Component = models.ManyToManyField(Component, through='PurshaseComponent')
+    Equipment = models.ManyToManyField(Equipment, through='PurshaseEquipment')
     date = models.DateField()
     # Add other fields as needed
 
-class SalesSupplier(models.Model):
-    client = models.ForeignKey(Clients, on_delete=models.CASCADE)
-    date = models.DateField()
-    # Add other fields as needed
+class PurshaseCompra(models.Model):
+    purchase = models.ForeignKey(Purchases, on_delete=models.CASCADE)
 
-class PurchaseSupplier(models.Model):
-    suppliers = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
-    date = models.DateField()
-    # Add other fields as needed
-
-class PurchaseClient(models.Model):
-    Client = models.ForeignKey(Clients, on_delete=models.CASCADE)
-    date = models.DateField()
-    # Add other fields as needed
+class PurshaseEquipment(models.Model):
+    purchase = models.ForeignKey(Purchases, on_delete=models.CASCADE)
 
 class InvoicesSales(models.Model):
-    sale_manager = models.ForeignKey(SalesManager, on_delete=models.CASCADE)
-    sales_supplier =  models.ForeignKey(SalesSupplier, on_delete=models.CASCADE)
+    sale = models.OneToOneField(Sales, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField()
     # Add other fields as needed
 
 class InvoicesPurchage(models.Model):
-    purchase_client = models.ForeignKey(PurchaseClient, on_delete=models.CASCADE)
-    purchase_supplier = models.ForeignKey(PurchaseSupplier, on_delete=models.CASCADE)
+    purchase = models.OneToOneField(Purchases, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField()
     # Add other fields as needed
