@@ -83,7 +83,7 @@ DATABASES = {
         'USER': 'aluno12',  # PostgreSQL username
         'PASSWORD': 'Aluno10#9403',  # PostgreSQL password
         'HOST': '193.137.7.56',  # PostgreSQL host
-        #'PORT': '5432',  # PostgreSQL port
+        'PORT': '5432',  # PostgreSQL port
     },
      'mongodb': {
         'ENGINE': 'djongo',
@@ -91,7 +91,7 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             'host': '193.137.7.56',  # MongoDB host
-            #'port': 27017,        # MongoDB port
+            'port': 27017,        # MongoDB port
             'username': 'aluno2 ', # MongoDB username (if needed)
             'password': 'Aluno10#9403', # MongoDB password (if needed)
             #'authSource': 'admin',  # MongoDB authentication source
@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'website'
+AUTH_USER_MODEL = 'website.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
