@@ -1,25 +1,19 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
-class Managers(AbstractUser):
-    is_manager = models.BooleanField(default=False)
-    # Add other fields for user roles and profile
+class UserProfile(models.Model):
+    USER_TYPES = [
+        ('manager', 'Manager'),
+        ('supplier', 'Supplier'),
+        ('client', 'Client'),
+    ]
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_type = models.CharField(max_length=20, choices=USER_TYPES)
+    # Add any additional fields specific to user profiles
 
     def __str__(self):
-        return self.username
-
-class Suppliers(AbstractUser):
-    is_supplier = models.BooleanField(default=False)
-    # Add other fields for user roles and profile
-
-    def __str__(self):
-        return self.username
-
-class Clients(AbstractUser):
-    is_Client = models.BooleanField(default=False)
-    # Add other fields for user roles and profile
-    def __str__(self):
-        return self.username
+        return f'{self.user.username} ({self.user_type})'
 
 
 class Component(models.Model):
@@ -34,24 +28,29 @@ class Types_of_Labor(models.Model):
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=6)
 
-    
+   
 class Equipment(models.Model):
-    id_equip = models.BigAutoField(primary_key=True, default=int) 
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    price = models.DecimalField(decimal_places=2, max_digits=6)
-    components = models.ManyToManyField(Component, through='ComponentUsage')
-    type_equip = models.CharField(max_length=100)
-    type_labor = models.ManyToOneRel(Types_of_Labor, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField()
-    state = models.CharField(choices=(
-          ('0', "analyzing")
-          ('1', "producing"),
-          ('2', "produced"),
-          ),
-          max_length=1,
-          default='producing'
-          )
+   ANALYSING = 'analysing'
+   PRODUCING = 'producing'
+   PRODUCED = 'produced'
+   STATUS = [
+       (ANALYSING, ('Analisando equipamento')),
+       (PRODUCING, ('produxindo equipamento')),
+       (PRODUCED , ('euipamento produzido')),
+   ]
+   id_equip = models.BigAutoField(primary_key=True, default=int) 
+   name = models.CharField(max_length=100)
+   description = models.TextField()
+   price = models.DecimalField(decimal_places=2, max_digits=6)
+   components = models.ManyToManyField(Component, through='ComponentUsage')
+   type_equip = models.CharField(max_length=100)
+   type_labor = models.ForeignKey(Types_of_Labor,on_delete=models.CASCADE)
+   quantity = models.PositiveIntegerField()
+   state = models.CharField(
+        choices= STATUS,
+        max_length=4,
+        default='ANALYSING',
+        )
 
 class ComponentUsage(models.Model):
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
@@ -62,7 +61,7 @@ class StockComponents(models.Model):
     id_stock_comp = models.BigAutoField(primary_key=True, default=int)
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    supplier = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
+    supplier = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     # Add other fields as needed
 
 class StockEquipment(models.Model):
@@ -72,8 +71,8 @@ class StockEquipment(models.Model):
     # Add other fields as needed
 
 class Sales(models.Model):
-    manager = models.ForeignKey(Managers, on_delete=models.CASCADE)
-    Suppliers = models.ForeignKey(Suppliers, on_delete=models.CASCADE)
+    manager = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    Suppliers = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     Component = models.ManyToManyField(Component, through='SalesComponent')
     Equipment = models.ManyToManyField(Equipment, through='SalesEquipment')
     date = models.DateField()
@@ -87,8 +86,8 @@ class SalesEquipment(models.Model):
 
 class Purchases(models.Model):
     id_purchase = models.BigAutoField(primary_key=True, default=int)
-    manager = models.ForeignKey(Managers, on_delete=models.CASCADE)
-    client = models.ForeignKey(Clients, on_delete=models.CASCADE)
+    manager = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    client = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     Component = models.ManyToManyField(Component, through='PurshaseComponent')
     Equipment = models.ManyToManyField(Equipment, through='PurshaseEquipment')
     date = models.DateField()

@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djongo',
+    'website',
 ]
 
 MIDDLEWARE = [
@@ -74,12 +76,32 @@ WSGI_APPLICATION = 'Gestao_Equipamentos.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+   
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'aluno12',  # Name of your PostgreSQL database
+        'USER': 'aluno12',  # PostgreSQL username
+        'PASSWORD': 'Aluno10#9403',  # PostgreSQL password
+        'HOST': '193.137.7.56',  # PostgreSQL host
+        #'PORT': '5432',  # PostgreSQL port
+    },
+     'mongodb': {
+        'ENGINE': 'djongo',
+        'NAME': 'aluno12',  # Name of your MongoDB database
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': '193.137.7.56',  # MongoDB host
+            #'port': 27017,        # MongoDB port
+            'username': 'aluno2 ', # MongoDB username (if needed)
+            'password': 'Aluno10#9403', # MongoDB password (if needed)
+            #'authSource': 'admin',  # MongoDB authentication source
+        }
+    },
 }
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -99,6 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'website'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
