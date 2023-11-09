@@ -8,15 +8,23 @@ class ManagerProfile(AbstractUser):
     def __str__(self):
         return self.username
 
-class ClientProfile(AbstractUser):
-    # Add other fields for user roles and profile
-    def __str__(self):
-        return self.username
+class ClientProfile(models.Model):
+    id = models.BigAutoField(primary_key=True, serialize=True, default=int)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone = models.IntegerField()
+    nif = models.IntegerField()
+    address = models.TextField()
+
 
 class SupplierProfile(AbstractUser):
-    # Add other fields for user roles and profile
-    def __str__(self):
-        return self.username
+   id = models.BigAutoField(primary_key=True, serialize=True, default=int)
+   first_name = models.CharField(max_length=50)
+   last_name = models.CharField(max_length=50)
+   email = models.EmailField()
+   phone = models.IntegerField()
+   address = models.TextField()
 
 class Component(models.Model): 
     id_comp = models.BigAutoField(primary_key=True, default=int)
@@ -70,14 +78,14 @@ class StockComponents(models.Model):
     id_stock_comp = models.BigAutoField(primary_key=True, default=int)
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    manager = models.ForeignKey(ManagerProfile, on_delete=models.CASCADE)
+    manager = models.OneToOneField(ManagerProfile, on_delete=models.CASCADE)
     # Add other fields as needed
 
 class StockEquipments(models.Model):
     id_stock_equip = models.BigAutoField(primary_key=True, default=int)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    manager = models.ForeignKey(ManagerProfile, on_delete=models.CASCADE)
+    manager = models.OneToOneField(ManagerProfile, on_delete=models.CASCADE)
     # Add other fields as needed
 
 class PurshaseEquipment(models.Model):
