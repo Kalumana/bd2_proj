@@ -79,25 +79,15 @@ DATABASES = {
    
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'aluno12',  # Name of your PostgreSQL database
-        'USER': 'aluno12',  # PostgreSQL username
-        'PASSWORD': 'Aluno10#9403',  # PostgreSQL password
-        'HOST': '193.137.7.56',  # PostgreSQL host
+        'NAME': 'EquipmentManagement',  # Name of your PostgreSQL database
+        'USER': 'manager',  # PostgreSQL username
+        'PASSWORD': 'Manager2023',  # PostgreSQL password
+        'HOST': 'localhost',  # PostgreSQL host
         'PORT': '5432',  # PostgreSQL port
     },
-     'mongodb': {
-        'ENGINE': 'djongo',
-        'NAME': 'aluno12',  # Name of your MongoDB database
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': '193.137.7.56',  # MongoDB host
-            'port': 27017,        # MongoDB port
-            'username': 'aluno2 ', # MongoDB username (if needed)
-            'password': 'Aluno10#9403', # MongoDB password (if needed)
-            #'authSource': 'admin',  # MongoDB authentication source
-        }
-    },
 }
+
+MONGO_DB = 'mongodb+srv://manager:manager2023@cluster0.gkacfvh.mongodb.net/'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -121,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'website.CustomUser'
+AUTH_USER_MODEL = 'website.ManagerProfile'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
