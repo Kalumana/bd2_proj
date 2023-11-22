@@ -83,14 +83,12 @@ class StockComponents(models.Model):
     id_stock_comp = models.BigAutoField(primary_key=True,serialize = True, default=int)
     component = models.ForeignKey(Component, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    manager = models.OneToOneField(Mana, on_delete=models.CASCADE)
     # Add other fields as needed
 
 class StockEquipments(models.Model):
     id_stock_equip = models.BigAutoField(primary_key=True, serialize = True,default=int)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
-    manager = models.OneToOneField(Mana, on_delete=models.CASCADE)
     # Add other fields as needed
 
 class PurshaseEquipment(models.Model):
