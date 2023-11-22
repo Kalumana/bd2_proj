@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 
     
-class Mana(AbstractUser):
+class Manager(AbstractUser):
     # Add other fields for user roles and profile
     def __str__(self):
         return self.username
