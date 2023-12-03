@@ -11,6 +11,7 @@ class Manager(AbstractUser):
 
 class Client(models.Model):
     id = models.BigAutoField(primary_key=True, serialize=True, default=int)
+    username = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
@@ -96,6 +97,3 @@ class PurshaseEquipment(models.Model):
     user = models.ForeignKey(Client, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
-
-
-
