@@ -19,13 +19,13 @@ cursor = connection.cursor()
 # Example SQL INSERT statements for each table
 insert_queries = [
     """
-   INSERT INTO website_client (id,first_name, last_name, email, phone, nif, address, city, postal_code, create_at)
+   INSERT INTO website_client (id,username,first_name, last_name, email, phone, nif, address, city, postal_code, create_at)
    VALUES
-    (1,'Client1', 'Lastname1', 'client1@example.com', 123456789, 123456789, 'Address1', 'City1', '12345', NOW()),
-    (2,'Client2', 'Lastname2', 'client2@example.com', 987654321, 987654321, 'Address2', 'City2', '54321', NOW()),
-    (3,'Client3', 'Lastname3', 'client3@example.com', 111222333, 111222333, 'Address3', 'City3', '67890', NOW()),
-    (4,'Client4', 'Lastname4', 'client4@example.com', 444555666, 444555666, 'Address4', 'City4', '13579', NOW()),
-    (5,'Client5', 'Lastname5', 'client5@example.com', 777888999, 777888999, 'Address5', 'City5', '24680', NOW());
+    (1,'user1','Client1', 'Lastname1', 'client1@example.com', 123456789, 123456789, 'Address1', 'City1', '12345', NOW()),
+    (2,'user2','Client2', 'Lastname2', 'client2@example.com', 987654321, 987654321, 'Address2', 'City2', '54321', NOW()),
+    (3,'user3','Client3', 'Lastname3', 'client3@example.com', 111222333, 111222333, 'Address3', 'City3', '67890', NOW()),
+    (4,'user4','Client4', 'Lastname4', 'client4@example.com', 444555666, 444555666, 'Address4', 'City4', '13579', NOW()),
+    (5,'user5','Client5', 'Lastname5', 'client5@example.com', 777888999, 777888999, 'Address5', 'City5', '24680', NOW());
     """,
     """
     INSERT INTO website_supplier (id,first_name, last_name, email, phone, nif, address)

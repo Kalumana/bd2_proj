@@ -1,7 +1,13 @@
 from django.shortcuts import render
+from django.db import connection
 
+# Create your views here.
 
+# Equipments list
+from django.shortcuts import render
+from .models import Equipment
 
+<<<<<<< HEAD
 # Create your views here.
 
 # Equipments view
@@ -18,6 +24,39 @@ from django.shortcuts import render
 from django.db.models import Count
 from .models import Equipment, Purchase
 
+=======
+def equipment_view(request):
+
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM equipment_view')
+        rows = cursor.fetchall()
+    
+    equipment_list = []
+
+    for row in rows:
+        equipment = {
+            'id_equip': row[0],
+            'equipment_name': row[1],
+            'equipment_description': row[2],
+            'equipment_price': row[3],
+            'equipment_created_at': row[4],
+            'type_equip': row[5],
+            'equipment_image': row[6],
+            'equipment_quantity': row[7],
+            'equipment_state': row[8],
+            'purchase_count': row[9],
+        }
+
+        equipment_list.append(equipment)
+    
+    context = {
+        'equipment_data': equipment_list,
+    }
+
+    return render(request, 'equipment.html', context)
+
+## Equipmet most purchased 
+>>>>>>> cefbff35130314997cf4fec70f35a8977ef03ee8
 def most_purchased_equipment(request):
     # Retrieve the most purchased equipment
     most_purchased_equipment = Equipment.objects.annotate(purchase_count=Count('purchase')).order_by('-purchase_count')[:5]
@@ -55,4 +94,8 @@ def current_user_details_view(request):
         'client_last_name': request.user.last_name,
         'client_email': request.user.email,
     }
+<<<<<<< HEAD
     return render(request, 'current_user_details.html', {'user_details': user_details})
+=======
+    return render(request, 'current_user_details.html', {'user_details': user_details})
+>>>>>>> cefbff35130314997cf4fec70f35a8977ef03ee8
