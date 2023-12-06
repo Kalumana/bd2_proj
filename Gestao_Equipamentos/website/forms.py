@@ -1,10 +1,11 @@
+#Forms
 from django import forms
 from .models import Manager, Client, Supplier, Component, Labor, Equipment, StockComponents, StockEquipments, PurshaseEquipment
 
 class ManagerForm(forms.Form):
     username = forms.CharField(max_length=150)
     password = forms.CharField(widget=forms.PasswordInput)
-    # Adicione os demais campos conforme necessário
+
 
 class ClientForm(forms.Form):
     username = forms.CharField(max_length=50)
@@ -17,6 +18,7 @@ class ClientForm(forms.Form):
     city = forms.CharField(max_length=256)
     postal_code = forms.CharField(max_length=10)
     create_at = forms.DateTimeField()
+    password = forms.CharField(max_length=50)
 
 class SupplierForm(forms.Form):
     first_name = forms.CharField(max_length=50)
@@ -62,3 +64,4 @@ class PurchaseEquipmentForm(forms.Form):
     user = forms.ModelChoiceField(queryset=Client.objects.all())
     equipment = forms.ModelChoiceField(queryset=Equipment.objects.all())
     date = forms.DateField()
+
