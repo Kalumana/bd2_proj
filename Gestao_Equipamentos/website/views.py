@@ -3,18 +3,20 @@ from django.shortcuts import render, redirect
 from django.db import connection
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
-from .forms import ClientForm
+from .forms import ManagerForm
 from django.db import connection
 #changes
 
 def registration(request):
     if request.method == 'POST':
-        form = ClientForm(request.POST)
+        form = ManagerForm(request.POST)
         if form.is_valid():
-            form.save()
+            manager = form.save(commit=False)
+            manager.set_password(form.cleaned_data['password1'])  # Define a senha de forma segura
+            manager.save()
             return redirect('login')  # Redireciona para a página de login após o registro bem-sucedido
     else:
-        form = ClientForm()
+        form = ManagerForm()
     return render(request, 'registration/registration.html', {'form': form})
 
 def user_login(request):

@@ -88,7 +88,7 @@ DATABASES = {
     },
 }
 
-MONGO_DB = 'mongodb+srv://manager:manager2023@cluster0.gkacfvh.mongodb.net/'
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

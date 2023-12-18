@@ -5,8 +5,9 @@ from django.contrib.postgres.fields import ArrayField
 
     
 class Manager(AbstractUser):
-    username = models.CharField(max_length=150, unique=True)
-    password = models.CharField(max_length=128) 
+    is_admin = models.BooleanField(default=False)
+    # Add other fields for user roles and profile
+
     def __str__(self):
         return self.username
 

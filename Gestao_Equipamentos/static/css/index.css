@@ -1,0 +1,15 @@
+/* Estilos para a barra de navegação */
+.navbar {
+    background-color: #3498db;
+    padding: 10px;
+}
+
+.navbar-links a {
+    color: white;
+    margin-right: 20px;
+    text-decoration: none;
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}

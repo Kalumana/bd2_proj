@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/index.css">
 </head>
 <body>
     <h1>Index Page</h1>
     <p>Welcome to the Index Page!</p>
     <p><a href="{% url 'registration' %}">Register</a> or <a href="{% url 'login' %}">Login</a></p>
+    <nav class="navbar">
+        <div class="navbar-links">
+            <a href="/equipamentos">Equipamentos</a>
+            <a href="/componentes">Componentes</a>
+            <a href="/perfil">Perfil</a>
+            <a href="/configuracoes">Configurações</a>
+            <a href="/sair">Sair</a>
+        </div>
+    </nav>
 </body>
 </html>

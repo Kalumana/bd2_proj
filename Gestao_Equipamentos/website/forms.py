@@ -2,10 +2,30 @@
 from django import forms
 from .models import Manager, Client, Supplier, Component, Labor, Equipment, StockComponents, StockEquipments, PurshaseEquipment
 
-class ManagerForm(forms.Form):
-    username = forms.CharField(max_length=150)
-    password = forms.CharField(widget=forms.PasswordInput)
+class ManagerForm(forms.ModelForm):
+    password1 = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
 
+    class Meta:
+        model = Manager
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+    def save(self, commit=True):
+        user = super(ManagerForm, self).save(commit=False)
+        user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+
+            # Create the corresponding Client instance
+            client = Client(
+                user=user,
+                username=user.username,
+                password=user.password,  # Não recomendado, use métodos apropriados para autenticação
+                # Adicione os outros campos do Client necessários aqui
+            )
+            client.save(using='mongodb')  # Salvar no banco de dados MongoDB
+
+        return user
 
 class ClientForm(forms.Form):
     username = forms.CharField(max_length=50)
