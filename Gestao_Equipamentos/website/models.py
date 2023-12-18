@@ -1,4 +1,3 @@
-#models
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
@@ -13,6 +12,7 @@ class Manager(AbstractUser):
 
 class Client(models.Model):
     id = models.BigAutoField(primary_key=True, serialize=True, default=int)
+    username = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
@@ -22,7 +22,7 @@ class Client(models.Model):
     city = models.CharField(max_length=256)
     postal_code = models.CharField(max_length=10)
     create_at = models.DateTimeField()
-    password = models.CharField(max_length=50, unique=True, null=False)
+
 
 class Supplier(models.Model):
    id = models.BigAutoField(primary_key=True, serialize=True, default=int)
@@ -98,6 +98,3 @@ class PurshaseEquipment(models.Model):
     user = models.ForeignKey(Client, on_delete=models.CASCADE)
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
-
-
-
